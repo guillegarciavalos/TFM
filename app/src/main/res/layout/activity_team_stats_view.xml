@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    tools:ignore="HardcodedText">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".PlayersView">
+
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="120dp">
+
+        <ImageView
+            android:id="@+id/teamLogoIv"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/teamNameTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="0dp"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stretchColumns="1"
+            android:layout_below="@+id/header">
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/totalGamesText"
+                    android:text="  Total games played"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/totalGames"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/totalPointsText"
+                    android:text="  Total points scored"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/totalPoints"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
+            </TableRow>
+            <TableRow>
+
+                <TextView
+                    android:id="@+id/ppgText"
+                    android:text="  Points per game"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/ppg"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/fgText"
+                    android:text="  Field goals"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/fg"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/fgpText"
+                    android:text="  Field goals Percentage"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/fgp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/ftText"
+                    android:text="  Free throws"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/ft"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/ftpText"
+                    android:text="  Free throws Percentage"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/ftp"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="0dp"
+                    android:fontFamily="sans-serif-black"
+                    android:textSize="20sp"
+                    android:textAlignment="center"
+                    android:textStyle="bold" />
+            </TableRow>
+
+        </TableLayout>
+
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:menu="@menu/navigation_menu" />
+
+</androidx.drawerlayout.widget.DrawerLayout>
