@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
@@ -28,9 +29,8 @@ public class CustomTeamAdapter extends BaseAdapter {
     private LayoutInflater lInflater;
     private List<TeamObject> listStorage;
     private Context context;
-    private FavDB favDB;
-    ArrayList<TeamObject> favoriteTeams = new ArrayList<>();;
-
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
 
     public CustomTeamAdapter(Context context,
                          List<TeamObject> customizedListView) {
@@ -86,27 +86,43 @@ public class CustomTeamAdapter extends BaseAdapter {
             }
         });
 
-
         favorite = view.findViewById(R.id.favorite);
         favorite.setBackgroundResource(R.drawable.ic_baseline_star_border_24);
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TeamObject teamObject = listStorage.get(i);
+                myRef = database.getReference("favorites/" + teamObject.getId());
 
-                if (teamObject.getfavStatus().equals("0") || !favoriteTeams.contains(teamObject)) {
+                if (teamObject.getfavStatus().equals("0")) {
                     teamObject.setfavStatus("1");
                     favorite.setBackgroundResource(R.drawable.ic_baseline_star_24);
-                    favoriteTeams.add(teamObject);
+                    myRef.setValue(teamObject);
                 } else {
                     teamObject.setfavStatus("0");
                     favorite.setBackgroundResource(R.drawable.ic_baseline_star_border_24);
-                    favoriteTeams.remove(teamObject);
-                }
-                for(int i = 0; i < favoriteTeams.size(); i++){
-                    System.out.println("Favorites: " + favoriteTeams.get(i).getName());
+                    myRef.removeValue();
                 }
 
+               /* myRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists() && dataSnapshot.hasChild(teamObject.getId())) {
+                            teamObject.setfavStatus("0");
+                            favorite.setBackgroundResource(R.drawable.ic_baseline_star_border_24);
+                            myRef.removeValue();
+                        } else {
+                            teamObject.setfavStatus("1");
+                            favorite.setBackgroundResource(R.drawable.ic_baseline_star_24);
+                            myRef.setValue(teamObject);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        System.out.println("DatabaseError: " + databaseError);
+                    }
+                }); */
             }
         });
 

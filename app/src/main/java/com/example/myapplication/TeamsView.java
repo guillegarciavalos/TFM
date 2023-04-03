@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,7 +41,6 @@ public class TeamsView extends AppCompatActivity {
     private Button logout;
     private Button eastTeamsBtn;
     private Button westTeamsBtn;
-    //private ImageButton favorites;
     JSONObject resultObjectEast;
     JSONObject resultObjectWest;
     JSONArray jsonArrayEast = null;
@@ -49,23 +49,20 @@ public class TeamsView extends AppCompatActivity {
     private final ArrayList<TeamObject> jsonObjectWest = new ArrayList<>();
     private ArrayList<TeamObject> parsedEastTeams;
     private ArrayList<TeamObject> parsedWestTeams;
-    //private List<TeamObject> favoriteTeams;
 
     private FirebaseAuth firebaseAuth;
-
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("message");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_teams_view);
 
+        /**
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(TeamsView.this));
-
-        myRef.setValue("Hello, World!");
+         */
 
         eastTeamsGrid = findViewById(R.id.eastTeamsGrid);
         ViewCompat.setNestedScrollingEnabled(eastTeamsGrid,true);
