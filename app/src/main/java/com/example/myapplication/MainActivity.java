@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
             }catch (Exception e){
                 //failed GoogleSignIn
-                Log.d(TAG, "onActivityResult: "+ e.getMessage());
+                Log.d(TAG, "onActivityResult: "+ e);
             }
         }
     }

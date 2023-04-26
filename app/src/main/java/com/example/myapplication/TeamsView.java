@@ -8,13 +8,16 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,12 +60,6 @@ public class TeamsView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         FirebaseApp.initializeApp(this);
         setContentView(R.layout.activity_teams_view);
-
-        /**
-        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(TeamsView.this));
-         */
 
         eastTeamsGrid = findViewById(R.id.eastTeamsGrid);
         ViewCompat.setNestedScrollingEnabled(eastTeamsGrid,true);
@@ -142,8 +139,6 @@ public class TeamsView extends AppCompatActivity {
                 System.out.println("Error loading API: " + error);
             }
         });
-
-        //favorites = findViewById(R.id.favorite);
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
@@ -232,22 +227,30 @@ public class TeamsView extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.navigation_menu, menu);
+        return true;
+    }
+
     // override the onOptionsItemSelected()
     // function to implement
     // the item click listener callback
     // to open and close the navigation
     // drawer when the icon is clicked
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        System.out.println("onOptionsItemSelected: item selected");
 
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        return super.onOptionsItemSelected(item);
-        /**
+
         switch (item.getItemId()){
             case R.id.nav_account:
-                //Handle the Account action
+                System.out.println("My account selected");
                 return true;
             case R.id.nav_logout:
                 firebaseAuth.signOut();
@@ -255,10 +258,10 @@ public class TeamsView extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.nav_teams:
-                //
+                Toast.makeText(this, "Teams selected", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
-        } */
+        }
     }
 }
