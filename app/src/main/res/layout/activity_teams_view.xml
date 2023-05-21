@@ -11,6 +11,7 @@
     tools:ignore="HardcodedText">
 
 <RelativeLayout
+    android:id="@+id/body"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TeamsView">
@@ -83,7 +84,7 @@
         android:id="@+id/eastTeamsGrid"
         android:layout_below="@id/buttons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="560dp"
         android:numColumns="1"
         android:focusable="false"
         android:clickable="false"
@@ -91,15 +92,27 @@
 
     <GridView
         android:id="@+id/westTeamsGrid"
-        android:layout_below="@id/buttons"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:numColumns="1"
-        android:focusable="false"
+        android:layout_height="560dp"
+        android:layout_below="@id/buttons"
         android:clickable="false"
-        android:verticalSpacing="2dp" />
+        android:focusable="false"
+        android:numColumns="1"
+        android:verticalSpacing="2dp">
+
+    </GridView>
+
+    <Button
+        android:id="@+id/favTeamsBtn"
+        android:layout_below="@id/westTeamsGrid"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
+        android:layout_marginTop="0dp"
+        android:fontFamily="sans-serif-black"
+        android:text="FAVORITE TEAMS" />
 
 </RelativeLayout>
+
 
     <com.google.android.material.navigation.NavigationView
         android:layout_width="wrap_content"

@@ -44,6 +44,7 @@ public class TeamsView extends AppCompatActivity {
     private Button logout;
     private Button eastTeamsBtn;
     private Button westTeamsBtn;
+    private Button favTeamsBtn;
     JSONObject resultObjectEast;
     JSONObject resultObjectWest;
     JSONArray jsonArrayEast = null;
@@ -71,6 +72,8 @@ public class TeamsView extends AppCompatActivity {
         eastTeamsBtn = findViewById(R.id.eastTeamsBtn);
         westTeamsBtn = findViewById(R.id.westTeamsBtn);
 
+        favTeamsBtn = findViewById(R.id.favTeamsBtn);
+
         eastTeamsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +95,14 @@ public class TeamsView extends AppCompatActivity {
             public void onClick(View view) {
                 firebaseAuth.signOut();
                 Intent i = new Intent(TeamsView.this, MainActivity.class);
+                startActivity(i);
+            }
+        });
+
+        favTeamsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(TeamsView.this, FavoriteTeamsView.class);
                 startActivity(i);
             }
         });

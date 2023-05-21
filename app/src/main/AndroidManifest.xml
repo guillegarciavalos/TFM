@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".FavoriteTeamsView"
+            android:exported="false" />
+        <activity
             android:name=".PlayerStatsView"
             android:exported="false" />
         <activity
