@@ -119,6 +119,7 @@ public class TeamsView extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String str = new String(responseBody);
                 parsedEastTeams = returnParsedJSONObjectEast(str);
+                System.out.println("parsedEastTeams: "+ parsedEastTeams);
                 CustomTeamAdapter jsonEastTeamsCustomAdapter = new CustomTeamAdapter(TeamsView.this, parsedEastTeams);
                 eastTeamsGrid.setAdapter(jsonEastTeamsCustomAdapter);
                 eastTeamsGrid.setVisibility(View.VISIBLE);

@@ -13,6 +13,8 @@ public class TeamObject {
         this.logo = logo;
     }
 
+    public TeamObject(){}
+
     public String getId() {
         return id;
     }

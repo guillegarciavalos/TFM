@@ -26,12 +26,8 @@ public class FavoriteTeamsView extends AppCompatActivity {
     private GridView favTeamsGrid;
 
     private ArrayList<TeamObject> favTeamsList;
-    Map<String, Object> map = null;
 
-    String userId;
-    String teamId, teamName, teamLogo;
-
-    //private TextView tv;
+    String userId, teamId, teamName, teamLogo;
 
     private FirebaseAuth firebaseAuth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -55,24 +51,21 @@ public class FavoriteTeamsView extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                TeamObject teamObject = dataSnapshot.getValue(TeamObject.class);
-                System.out.println("TeamObject: "+ teamObject);
-
-               /** favTeamsList = new ArrayList<>();
+                System.out.println("Entra en onDataChange");
+                favTeamsList = new ArrayList<>();
                 for(DataSnapshot child : dataSnapshot.getChildren()){
-
-//EL PROBLEMA ES QUE SE QUEDA EN ID POR ESO NO HACE EL MAPPING Y SOLO COGE UN OBJETO.
-// HAY QUE HACER QUE LA DB REFERENCE ENTRE EN EL ID PARA CADA UNO PARA DE AHÍ COGER
-// TODOS LOS VALORES, CREAR UN NUEVO TEAMOBJECT Y AÑADIRLO A LA LISTA PARA PASARLO AL ADAPTER
 
                     TeamObject teamObject = child.getValue(TeamObject.class);
                     System.out.println("TeamObject:"+ teamObject);
-                    //favTeamsList.add(teamObject);
-                    //teamId = teamObject.id;
-                    //System.out.println("teamId: "+ teamId);
-                    //teamName = teamObject.name;
-                    //teamLogo = teamObject.logo;
-               } */
+                    favTeamsList.add(teamObject);
+                    teamId = teamObject.id;
+                    System.out.println("teamId: "+ teamId);
+                    teamName = teamObject.name;
+                    System.out.println("teamname: "+ teamName);
+                    teamLogo = teamObject.logo;
+                    System.out.println("teamlogo: "+ teamLogo);
+               }
+                System.out.println("Favs: "+ favTeamsList);
 
             }
 
@@ -81,7 +74,8 @@ public class FavoriteTeamsView extends AppCompatActivity {
                 System.out.println("The read failed: " + error);
             }
         });
-        //tv.setText(teamId + " " + teamName + " " + teamLogo);
+
+        //ERRORES AQUÍ: VALORAR CREAR NUEVO ADAPTER SOLO PARA FAVORITOS
 
         //CustomTeamAdapter jsonFavTeamsCustomAdapter = new CustomTeamAdapter(FavoriteTeamsView.this, favTeamsList);
         //favTeamsGrid.setAdapter(jsonFavTeamsCustomAdapter);
