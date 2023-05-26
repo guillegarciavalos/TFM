@@ -38,6 +38,8 @@ public class FavoriteTeamsView extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorite_teams_view);
 
+        favTeamsList = new ArrayList<>();
+
         favTeamsGrid = findViewById(R.id.favTeamsGrid);
         ViewCompat.setNestedScrollingEnabled(favTeamsGrid,true);
 
@@ -52,7 +54,6 @@ public class FavoriteTeamsView extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 System.out.println("Entra en onDataChange");
-                favTeamsList = new ArrayList<>();
                 for(DataSnapshot child : dataSnapshot.getChildren()){
 
                     TeamObject teamObject = child.getValue(TeamObject.class);
@@ -66,6 +67,8 @@ public class FavoriteTeamsView extends AppCompatActivity {
                     System.out.println("teamlogo: "+ teamLogo);
                }
                 System.out.println("Favs: "+ favTeamsList);
+                CustomTeamAdapter jsonFavTeamsCustomAdapter = new CustomTeamAdapter(FavoriteTeamsView.this, favTeamsList);
+                favTeamsGrid.setAdapter(jsonFavTeamsCustomAdapter);
 
             }
 
@@ -74,10 +77,5 @@ public class FavoriteTeamsView extends AppCompatActivity {
                 System.out.println("The read failed: " + error);
             }
         });
-
-        //ERRORES AQUÍ: VALORAR CREAR NUEVO ADAPTER SOLO PARA FAVORITOS
-
-        //CustomTeamAdapter jsonFavTeamsCustomAdapter = new CustomTeamAdapter(FavoriteTeamsView.this, favTeamsList);
-        //favTeamsGrid.setAdapter(jsonFavTeamsCustomAdapter);
     }
 }
