@@ -1,14 +1,28 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomFavTeamAdapter extends BaseAdapter {
@@ -29,21 +43,63 @@ public class CustomFavTeamAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 0;
+        return listStorage.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public Object getItem(int i) {
+        return i;
     }
 
     @Override
-    public long getItemId(int position) {
-        return 0;
+    public long getItemId(int i) {
+        return i;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+    public View getView(int i, View view, ViewGroup viewGroup) {
+
+        TextView team;
+        ImageButton favorite;
+        RelativeLayout item;
+
+        if(view == null){
+            view = lInflater.inflate(R.layout.team_list, viewGroup,false);
+        }
+
+        team = view.findViewById(R.id.name);
+        team.setText(listStorage.get(i).name);
+
+        new DownloadImageFromInternet((ImageView) view.findViewById(R.id.teamlogo)).execute(listStorage.get(i).logo);
+
+        item = view.findViewById(R.id.teamButton);
+        item.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, PlayersView.class);
+                String teamId = listStorage.get(i).id;
+                String teamName = listStorage.get(i).name;
+                String teamLogo = listStorage.get(i).logo;
+                intent.putExtra("teamId", teamId);
+                intent.putExtra("teamName", teamName);
+                intent.putExtra("teamLogo", teamLogo);
+                context.startActivity(intent);
+            }
+        });
+
+        favorite = view.findViewById(R.id.favorite);
+        favorite.setBackgroundResource(R.drawable.ic_baseline_star_24);
+        favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                TeamObject teamObject = listStorage.get(i);
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                myRef = database.getReference("users/" + userId + "/favorites/" + teamObject.getId());
+                myRef.removeValue();
+                listStorage.remove(i);
+                notifyDataSetChanged();
+            }
+        });
+        return view;
     }
 }

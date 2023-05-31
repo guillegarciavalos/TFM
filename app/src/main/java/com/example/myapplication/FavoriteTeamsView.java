@@ -66,10 +66,7 @@ public class FavoriteTeamsView extends AppCompatActivity {
                     teamLogo = teamObject.logo;
                     System.out.println("teamlogo: "+ teamLogo);
                }
-                System.out.println("Favs: "+ favTeamsList);
-                CustomTeamAdapter jsonFavTeamsCustomAdapter = new CustomTeamAdapter(FavoriteTeamsView.this, favTeamsList);
-                favTeamsGrid.setAdapter(jsonFavTeamsCustomAdapter);
-
+                setFavTeamsAdapter(favTeamsList);
             }
 
             @Override
@@ -77,5 +74,13 @@ public class FavoriteTeamsView extends AppCompatActivity {
                 System.out.println("The read failed: " + error);
             }
         });
+
+
+    }
+
+    private void setFavTeamsAdapter (ArrayList<TeamObject> favTeamsList){
+        System.out.println("Favs: "+ favTeamsList);
+        CustomFavTeamAdapter jsonFavTeamsCustomAdapter = new CustomFavTeamAdapter(FavoriteTeamsView.this, favTeamsList);
+        favTeamsGrid.setAdapter(jsonFavTeamsCustomAdapter);
     }
 }
