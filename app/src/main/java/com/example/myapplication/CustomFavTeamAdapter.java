@@ -60,7 +60,6 @@ public class CustomFavTeamAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
 
         TextView team;
-        ImageButton favorite;
         RelativeLayout item;
 
         if(view == null){
@@ -87,6 +86,7 @@ public class CustomFavTeamAdapter extends BaseAdapter {
             }
         });
 
+        /*
         favorite = view.findViewById(R.id.favorite);
         favorite.setBackgroundResource(R.drawable.ic_baseline_star_24);
         favorite.setOnClickListener(new View.OnClickListener() {
@@ -99,7 +99,7 @@ public class CustomFavTeamAdapter extends BaseAdapter {
                 listStorage.remove(i);
                 notifyDataSetChanged();
             }
-        });
+        }); */
         return view;
     }
 }

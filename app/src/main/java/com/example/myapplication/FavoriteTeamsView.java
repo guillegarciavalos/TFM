@@ -43,6 +43,9 @@ public class FavoriteTeamsView extends AppCompatActivity {
         favTeamsGrid = findViewById(R.id.favTeamsGrid);
         ViewCompat.setNestedScrollingEnabled(favTeamsGrid,true);
 
+        CustomFavTeamAdapter jsonFavTeamsCustomAdapter = new CustomFavTeamAdapter(FavoriteTeamsView.this, favTeamsList);
+        favTeamsGrid.setAdapter(jsonFavTeamsCustomAdapter);
+
         firebaseAuth = FirebaseAuth.getInstance();
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -54,19 +57,16 @@ public class FavoriteTeamsView extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 System.out.println("Entra en onDataChange");
+                favTeamsList.clear();
                 for(DataSnapshot child : dataSnapshot.getChildren()){
 
                     TeamObject teamObject = child.getValue(TeamObject.class);
-                    System.out.println("TeamObject:"+ teamObject);
                     favTeamsList.add(teamObject);
                     teamId = teamObject.id;
-                    System.out.println("teamId: "+ teamId);
                     teamName = teamObject.name;
-                    System.out.println("teamname: "+ teamName);
                     teamLogo = teamObject.logo;
-                    System.out.println("teamlogo: "+ teamLogo);
                }
-                setFavTeamsAdapter(favTeamsList);
+                jsonFavTeamsCustomAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -74,13 +74,5 @@ public class FavoriteTeamsView extends AppCompatActivity {
                 System.out.println("The read failed: " + error);
             }
         });
-
-
-    }
-
-    private void setFavTeamsAdapter (ArrayList<TeamObject> favTeamsList){
-        System.out.println("Favs: "+ favTeamsList);
-        CustomFavTeamAdapter jsonFavTeamsCustomAdapter = new CustomFavTeamAdapter(FavoriteTeamsView.this, favTeamsList);
-        favTeamsGrid.setAdapter(jsonFavTeamsCustomAdapter);
     }
 }

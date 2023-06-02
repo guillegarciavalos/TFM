@@ -21,8 +21,11 @@ import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -55,6 +58,11 @@ public class TeamsView extends AppCompatActivity {
     private ArrayList<TeamObject> parsedWestTeams;
 
     private FirebaseAuth firebaseAuth;
+
+    String userId;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference favoritesRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,6 +131,8 @@ public class TeamsView extends AppCompatActivity {
                 CustomTeamAdapter jsonEastTeamsCustomAdapter = new CustomTeamAdapter(TeamsView.this, parsedEastTeams);
                 eastTeamsGrid.setAdapter(jsonEastTeamsCustomAdapter);
                 eastTeamsGrid.setVisibility(View.VISIBLE);
+                //checkFavTeams(parsedEastTeams);
+
             }
 
             @Override
@@ -144,8 +154,9 @@ public class TeamsView extends AppCompatActivity {
                 CustomTeamAdapter jsonWestTeamsCustomAdapter = new CustomTeamAdapter(TeamsView.this, parsedWestTeams);
                 westTeamsGrid.setAdapter(jsonWestTeamsCustomAdapter);
                 westTeamsGrid.setVisibility(View.INVISIBLE);
-            }
+                //checkFavTeams(parsedWestTeams);
 
+            }
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 System.out.println("Error loading API: " + error);
@@ -164,7 +175,6 @@ public class TeamsView extends AppCompatActivity {
 
         // to make the Navigation drawer icon always appear on the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     private ArrayList<TeamObject> returnParsedJSONObjectEast (String result){
@@ -239,6 +249,30 @@ public class TeamsView extends AppCompatActivity {
 
     }
 
+    private void checkFavTeams(ArrayList<TeamObject> teamObjectList) {
+        System.out.println("All teams: " + teamObjectList);
+
+        userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        favoritesRef = database.getReference("users/" + userId + "/favorites");
+
+            ValueEventListener eventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    for(TeamObject teamObject: teamObjectList) {
+                        if (snapshot.hasChild(teamObject.getId())) {
+                            teamObject.setfavStatus("1");
+                        } else {
+                            teamObject.setfavStatus("0");
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    System.out.println("The read failed: " + error);
+                }
+            };
+        }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.navigation_menu, menu);

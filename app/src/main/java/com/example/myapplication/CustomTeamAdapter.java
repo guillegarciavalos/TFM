@@ -34,7 +34,7 @@ public class CustomTeamAdapter extends BaseAdapter {
     DatabaseReference myRef = database.getReference();
 
     public CustomTeamAdapter(Context context,
-                         List<TeamObject> customizedListView) {
+                             List<TeamObject> customizedListView) {
         lInflater = (LayoutInflater)context.getSystemService
                 (Context.LAYOUT_INFLATER_SERVICE);
         listStorage = customizedListView;
@@ -88,7 +88,13 @@ public class CustomTeamAdapter extends BaseAdapter {
         });
 
         favorite = view.findViewById(R.id.favorite);
-        favorite.setBackgroundResource(R.drawable.ic_baseline_star_border_24);
+        if(listStorage.get(i).getfavStatus().equals("0")){
+            favorite.setImageResource(0);
+            favorite.setBackgroundResource(R.drawable.ic_baseline_star_border_24);
+        }else{
+            favorite.setImageResource(0);
+            favorite.setImageResource(R.drawable.ic_baseline_star_24);
+        }
         favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,11 +104,15 @@ public class CustomTeamAdapter extends BaseAdapter {
 
                 if (teamObject.getfavStatus().equals("0")) {
                     teamObject.setfavStatus("1");
+                    System.out.println("favStatus1: "+ teamObject.getfavStatus());
+                    favorite.setImageResource(0);
                     favorite.setBackgroundResource(R.drawable.ic_baseline_star_24);
                     myRef.setValue(teamObject);
                 } else {
                     teamObject.setfavStatus("0");
+                    favorite.setImageResource(0);
                     favorite.setBackgroundResource(R.drawable.ic_baseline_star_border_24);
+                    System.out.println("favStatus0: "+ teamObject.getfavStatus());
                     myRef.removeValue();
                 }
 
