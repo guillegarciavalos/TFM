@@ -131,7 +131,7 @@ public class TeamsView extends AppCompatActivity {
                 CustomTeamAdapter jsonEastTeamsCustomAdapter = new CustomTeamAdapter(TeamsView.this, parsedEastTeams);
                 eastTeamsGrid.setAdapter(jsonEastTeamsCustomAdapter);
                 eastTeamsGrid.setVisibility(View.VISIBLE);
-                //checkFavTeams(parsedEastTeams);
+                checkFavTeams(parsedEastTeams, jsonEastTeamsCustomAdapter);
 
             }
 
@@ -154,7 +154,7 @@ public class TeamsView extends AppCompatActivity {
                 CustomTeamAdapter jsonWestTeamsCustomAdapter = new CustomTeamAdapter(TeamsView.this, parsedWestTeams);
                 westTeamsGrid.setAdapter(jsonWestTeamsCustomAdapter);
                 westTeamsGrid.setVisibility(View.INVISIBLE);
-                //checkFavTeams(parsedWestTeams);
+                checkFavTeams(parsedWestTeams, jsonWestTeamsCustomAdapter);
 
             }
             @Override
@@ -249,30 +249,31 @@ public class TeamsView extends AppCompatActivity {
 
     }
 
-    private void checkFavTeams(ArrayList<TeamObject> teamObjectList) {
+    private void checkFavTeams(ArrayList<TeamObject> teamObjectList, CustomTeamAdapter adapter) {
         System.out.println("All teams: " + teamObjectList);
 
         userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         favoritesRef = database.getReference("users/" + userId + "/favorites");
 
-            ValueEventListener eventListener = new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    for(TeamObject teamObject: teamObjectList) {
-                        if (snapshot.hasChild(teamObject.getId())) {
-                            teamObject.setfavStatus("1");
-                        } else {
-                            teamObject.setfavStatus("0");
-                        }
+        favoritesRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(TeamObject teamObject: teamObjectList) {
+                    if (snapshot.hasChild(teamObject.getId())) {
+                        teamObject.setfavStatus("1");
+                    } else {
+                        teamObject.setfavStatus("0");
                     }
                 }
+                adapter.notifyDataSetChanged();
+            }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-                    System.out.println("The read failed: " + error);
-                }
-            };
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                System.out.println("The read failed: " + error);
+            }
+        });
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.navigation_menu, menu);

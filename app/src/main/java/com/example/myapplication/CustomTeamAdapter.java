@@ -103,38 +103,10 @@ public class CustomTeamAdapter extends BaseAdapter {
                 myRef = database.getReference("users/" + userId + "/favorites/" + teamObject.getId());
 
                 if (teamObject.getfavStatus().equals("0")) {
-                    teamObject.setfavStatus("1");
-                    System.out.println("favStatus1: "+ teamObject.getfavStatus());
-                    favorite.setImageResource(0);
-                    favorite.setBackgroundResource(R.drawable.ic_baseline_star_24);
                     myRef.setValue(teamObject);
                 } else {
-                    teamObject.setfavStatus("0");
-                    favorite.setImageResource(0);
-                    favorite.setBackgroundResource(R.drawable.ic_baseline_star_border_24);
-                    System.out.println("favStatus0: "+ teamObject.getfavStatus());
                     myRef.removeValue();
                 }
-
-               /* myRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists() && dataSnapshot.hasChild(teamObject.getId())) {
-                            teamObject.setfavStatus("0");
-                            favorite.setBackgroundResource(R.drawable.ic_baseline_star_border_24);
-                            myRef.removeValue();
-                        } else {
-                            teamObject.setfavStatus("1");
-                            favorite.setBackgroundResource(R.drawable.ic_baseline_star_24);
-                            myRef.setValue(teamObject);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        System.out.println("DatabaseError: " + databaseError);
-                    }
-                }); */
             }
         });
 

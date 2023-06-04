@@ -85,21 +85,6 @@ public class CustomFavTeamAdapter extends BaseAdapter {
                 context.startActivity(intent);
             }
         });
-
-        /*
-        favorite = view.findViewById(R.id.favorite);
-        favorite.setBackgroundResource(R.drawable.ic_baseline_star_24);
-        favorite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                TeamObject teamObject = listStorage.get(i);
-                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                myRef = database.getReference("users/" + userId + "/favorites/" + teamObject.getId());
-                myRef.removeValue();
-                listStorage.remove(i);
-                notifyDataSetChanged();
-            }
-        }); */
         return view;
     }
 }
