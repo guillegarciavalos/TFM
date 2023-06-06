@@ -137,7 +137,7 @@ public class PlayersView extends AppCompatActivity {
                 firstname = jsonChildNode.getString("firstname");
                 lastname = jsonChildNode.getString("lastname");
 
-                newPlayerObject = new PlayerObject(idPName, firstname, lastname, teamName);
+                newPlayerObject = new PlayerObject(idPName, firstname, lastname, teamName, teamLogo);
                 jsonObject.add(newPlayerObject);
             }catch(JSONException e){
                 System.out.println("Err" + e);

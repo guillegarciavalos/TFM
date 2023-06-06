@@ -14,33 +14,51 @@
         android:layout_height="match_parent"
         tools:context=".PlayerStatsView">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/header"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="120dp">
+            android:layout_height="120dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/teamLogoIv"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="12dp"
+                app:srcCompat="@drawable/ic_launcher_background" />
 
             <TextView
                 android:id="@+id/playerNameTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_toEndOf="@+id/teamLogoIv"
                 android:fontFamily="sans-serif-black"
-                android:textSize="30sp"
                 android:textColor="@color/black"
+                android:textSize="25sp"
                 android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/teamTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_toEndOf="@+id/teamLogoIv"
                 android:fontFamily="sans-serif-black"
-                android:textSize="20sp"
                 android:textColor="@color/black"
+                android:textSize="20sp"
                 android:textStyle="bold" />
-        </LinearLayout>
+        </RelativeLayout>
 
         <TableLayout
             android:layout_width="match_parent"

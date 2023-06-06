@@ -56,10 +56,12 @@ public class CustomPlayerAdapter extends BaseAdapter {
                 String firstname = listStorage.get(i).firstname;
                 String lastname = listStorage.get(i).lastname;
                 String teamName = listStorage.get(i).teamName;
+                String teamLogo = listStorage.get(i).teamLogo;
                 intent.putExtra("playerId", idPName);
                 intent.putExtra("firstname", firstname);
                 intent.putExtra("lastname", lastname);
                 intent.putExtra("teamName", teamName);
+                intent.putExtra("teamLogo", teamLogo);
                 context.startActivity(intent);
             }
         });

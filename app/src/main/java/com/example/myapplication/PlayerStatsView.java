@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.icu.text.DecimalFormat;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -29,7 +30,8 @@ public class PlayerStatsView extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
-    String playerId, firstname, lastname, teamName;
+    String playerId, firstname, lastname, teamName, teamLogo;
+    ImageView teamLogoImg;
 
     JSONObject resultObject;
     JSONArray jsonArray = null;
@@ -51,8 +53,9 @@ public class PlayerStatsView extends AppCompatActivity {
         firstname = i.getStringExtra("firstname");
         lastname = i.getStringExtra("lastname");
         teamName = i.getStringExtra("teamName");
+        teamLogo = i.getStringExtra("teamLogo");
+        System.out.println("TeamLogo: "+ teamLogo);
 
-        //String playerPosition = parsedPlayerStats.get(0).position != null ? parsedPlayerStats.get(0).position.toString() : "Not specified";
 
         playerNameTv = findViewById(R.id.playerNameTv);
         playerNameTv.setText(firstname + " " + lastname);
@@ -64,6 +67,9 @@ public class PlayerStatsView extends AppCompatActivity {
         avgAssistsTv = findViewById(R.id.avgAssistsTv);
         avgFoulsTv = findViewById(R.id.avgFoulsTv);
         avgStealsTv = findViewById(R.id.avgStealsTv);
+
+        teamLogoImg = findViewById(R.id.teamLogoIv);
+        new DownloadImageFromInternet((ImageView) findViewById(R.id.teamLogoIv)).execute(teamLogo);
 
         String playerStatsUrl = "https://api-nba-v1.p.rapidapi.com/players/statistics?id="+playerId+"&season=2021";
         System.out.println("url " + playerStatsUrl);
@@ -136,9 +142,7 @@ public class PlayerStatsView extends AppCompatActivity {
                 System.out.println("Err" + e);
             }
         }
-        System.out.println("pointSUM = " + pointSum);
 
-        System.out.println("aaa " + jsonArray.length());
         double avgPoints = jsonArray.length() != 0 ? pointSum/jsonArray.length() : 0.0;
         double avgRebounds = jsonArray.length() != 0 ? totRebSum/jsonArray.length() : 0.0;
         double avgAssists = jsonArray.length() != 0 ? totAstSum/jsonArray.length() : 0.0;
