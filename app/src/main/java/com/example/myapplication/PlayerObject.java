@@ -2,14 +2,23 @@ package com.example.myapplication;
 
 public class PlayerObject {
 
-    String id,firstname,lastname, teamName, teamLogo ;
+    String id,firstname,lastname, teamName, teamLogo, season ;
 
-    public PlayerObject (String id, String firstname, String lastname, String teamName, String teamLogo){
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    public PlayerObject (String id, String firstname, String lastname, String teamName, String teamLogo, String season){
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.teamName = teamName;
         this.teamLogo = teamLogo;
+        this.season = season;
     }
 
     public String getId() {

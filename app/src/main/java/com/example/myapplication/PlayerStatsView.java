@@ -30,7 +30,7 @@ public class PlayerStatsView extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
 
-    String playerId, firstname, lastname, teamName, teamLogo;
+    String playerId, firstname, lastname, teamName, teamLogo, season;
     ImageView teamLogoImg;
 
     JSONObject resultObject;
@@ -54,6 +54,7 @@ public class PlayerStatsView extends AppCompatActivity {
         lastname = i.getStringExtra("lastname");
         teamName = i.getStringExtra("teamName");
         teamLogo = i.getStringExtra("teamLogo");
+        season = i.getStringExtra("season");
         System.out.println("TeamLogo: "+ teamLogo);
 
 
@@ -71,7 +72,7 @@ public class PlayerStatsView extends AppCompatActivity {
         teamLogoImg = findViewById(R.id.teamLogoIv);
         new DownloadImageFromInternet((ImageView) findViewById(R.id.teamLogoIv)).execute(teamLogo);
 
-        String playerStatsUrl = "https://api-nba-v1.p.rapidapi.com/players/statistics?id="+playerId+"&season=2021";
+        String playerStatsUrl = "https://api-nba-v1.p.rapidapi.com/players/statistics?id="+playerId+"&season="+season;
         System.out.println("url " + playerStatsUrl);
 
         AsyncHttpClient client = new AsyncHttpClient();

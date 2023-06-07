@@ -10,6 +10,9 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomPlayerAdapter extends BaseAdapter {
@@ -37,6 +40,11 @@ public class CustomPlayerAdapter extends BaseAdapter {
     @Override
     public long getItemId(int i) {return i;}
 
+    public void updateData(List<PlayerObject> playerObjectList) {
+        listStorage = playerObjectList;
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
 
@@ -57,11 +65,13 @@ public class CustomPlayerAdapter extends BaseAdapter {
                 String lastname = listStorage.get(i).lastname;
                 String teamName = listStorage.get(i).teamName;
                 String teamLogo = listStorage.get(i).teamLogo;
+                String season = listStorage.get(i).getSeason();
                 intent.putExtra("playerId", idPName);
                 intent.putExtra("firstname", firstname);
                 intent.putExtra("lastname", lastname);
                 intent.putExtra("teamName", teamName);
                 intent.putExtra("teamLogo", teamLogo);
+                intent.putExtra("season", season);
                 context.startActivity(intent);
             }
         });

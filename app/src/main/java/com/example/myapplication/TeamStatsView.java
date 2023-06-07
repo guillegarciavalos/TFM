@@ -32,7 +32,7 @@ public class TeamStatsView extends AppCompatActivity {
 
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
-    String teamId, teamLogo, teamName;
+    String teamId, teamLogo, teamName, season;
     ImageView teamLogoImg;
     TextView teamNameTv;
     TextView totalGames, totalPoints, ppgTv, fgTv, fgpTv, ftTv, ftpTV;
@@ -52,6 +52,7 @@ public class TeamStatsView extends AppCompatActivity {
         teamId = intent.getStringExtra("teamId");
         teamName = intent.getStringExtra("teamName");
         teamLogo = intent.getStringExtra("teamLogo");
+        season = intent.getStringExtra("season");
 
         teamLogoImg = findViewById(R.id.teamLogoIv);
         teamNameTv = findViewById(R.id.teamNameTv);
@@ -66,7 +67,7 @@ public class TeamStatsView extends AppCompatActivity {
         new DownloadImageFromInternet((ImageView) findViewById(R.id.teamLogoIv)).execute(teamLogo);
         teamNameTv.setText(teamName);
 
-        String teamStatsUrl = "https://api-nba-v1.p.rapidapi.com/teams/statistics?id="+teamId+"&season=2021";
+        String teamStatsUrl = "https://api-nba-v1.p.rapidapi.com/teams/statistics?id="+teamId+"&season="+season;
         System.out.println("url " + teamStatsUrl);
 
         AsyncHttpClient client = new AsyncHttpClient();

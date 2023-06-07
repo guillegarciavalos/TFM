@@ -5,6 +5,7 @@ public class TeamObject {
     String id;
     String name;
     String logo;
+    String season;
     String favStatus = "0";
 
     public TeamObject(String id, String name, String logo) {
@@ -42,4 +43,9 @@ public class TeamObject {
     public String getfavStatus() {return favStatus;}
 
     public void setfavStatus(String favorite) {this.favStatus = favorite;}
+
+
+    public String getSeason() {return season;}
+
+    public void setSeason(String season) {this.season = season;}
 }

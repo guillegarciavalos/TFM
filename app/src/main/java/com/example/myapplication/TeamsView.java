@@ -15,8 +15,11 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
@@ -81,6 +84,26 @@ public class TeamsView extends AppCompatActivity {
         westTeamsBtn = findViewById(R.id.westTeamsBtn);
 
         favTeamsBtn = findViewById(R.id.favTeamsBtn);
+
+        /** spinner = findViewById(R.id.seasonSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.seasons, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemSelected = parent.getItemAtPosition(position).toString();
+                String season = itemSelected.replaceAll("[^0-9]", "");
+                System.out.println("season: "+ season);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                season = "2021";
+            }
+        }); */
+
 
         eastTeamsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,6 +224,7 @@ public class TeamsView extends AppCompatActivity {
                 String name = jsonChildNode.getString("name");
                 String logo = jsonChildNode.getString("logo");
 
+
                 if(!logo.equals("null")){
                     newTeamObject = new TeamObject(id, name, logo);
                     jsonObjectEast.add(newTeamObject);
@@ -274,6 +298,7 @@ public class TeamsView extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.navigation_menu, menu);

@@ -10,11 +10,13 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -42,11 +44,12 @@ public class PlayersView extends AppCompatActivity {
     private List<PlayerObject> jsonObject = new ArrayList<>();
     private List<PlayerObject> parsedPlayers;
     private Button teamStatsBtn;
+    Spinner spinner;
 
     RelativeLayout item;
 
-    String teamId, teamName, teamLogo;
-    String idPName, firstname, lastname;
+    String teamId, teamName, teamLogo, season;
+    String idPName, firstname, lastname, playersUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +64,26 @@ public class PlayersView extends AppCompatActivity {
         teamName = intent.getStringExtra("teamName");
         teamLogo = intent.getStringExtra("teamLogo");
 
+        spinner = findViewById(R.id.seasonSpinner);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.seasons, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String itemSelected = parent.getItemAtPosition(position).toString();
+                String season = itemSelected.replaceAll("[^0-9]", "");
+                getData(season);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                season = "2021";
+            }
+        });
+
+
         teamStatsBtn = findViewById(R.id.teamStatsBtn);
         teamStatsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,34 +92,13 @@ public class PlayersView extends AppCompatActivity {
                 intent.putExtra("teamId", teamId);
                 intent.putExtra("teamName", teamName);
                 intent.putExtra("teamLogo", teamLogo);
+                intent.putExtra("season", season);
                 startActivity(intent);
             }
         });
 
         teamNameTv.setText(teamName);
         new DownloadImageFromInternet((ImageView) findViewById(R.id.teamLogo)).execute(teamLogo);
-
-        String playersUrl = "https://api-nba-v1.p.rapidapi.com/players?team="+teamId+"&season=2021";
-        System.out.println("url " + playersUrl);
-
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.addHeader("X-RapidAPI-Key", "4b30019b27msh7b1b5ffd53b790fp1e60bejsnb7b3a6236a8f");
-        client.addHeader("X-RapidAPI-Host", "api-nba-v1.p.rapidapi.com");
-        client.get(playersUrl, new AsyncHttpResponseHandler(){
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                String str = new String(responseBody);
-                parsedPlayers = returnParsedJSONObject(str);
-                CustomPlayerAdapter jsonPlayersCustomAdapter = new CustomPlayerAdapter(PlayersView.this, parsedPlayers);
-                players.setAdapter(jsonPlayersCustomAdapter);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                System.out.println("Error loading API: " + error);
-            }
-        });
 
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
@@ -113,7 +115,7 @@ public class PlayersView extends AppCompatActivity {
 
     }
 
-    private List<PlayerObject> returnParsedJSONObject (String result){
+    private List<PlayerObject> returnParsedJSONObject (String result, String season){
 
         PlayerObject newPlayerObject;
 
@@ -137,13 +139,47 @@ public class PlayersView extends AppCompatActivity {
                 firstname = jsonChildNode.getString("firstname");
                 lastname = jsonChildNode.getString("lastname");
 
-                newPlayerObject = new PlayerObject(idPName, firstname, lastname, teamName, teamLogo);
+                newPlayerObject = new PlayerObject(idPName, firstname, lastname, teamName, teamLogo, season);
                 jsonObject.add(newPlayerObject);
             }catch(JSONException e){
                 System.out.println("Err" + e);
             }
         }
         return jsonObject;
+    }
+
+    private void getData(String season){
+        playersUrl = "https://api-nba-v1.p.rapidapi.com/players?team="+teamId+"&season="+season;
+        System.out.println("url " + playersUrl);
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.addHeader("X-RapidAPI-Key", "4b30019b27msh7b1b5ffd53b790fp1e60bejsnb7b3a6236a8f");
+        client.addHeader("X-RapidAPI-Host", "api-nba-v1.p.rapidapi.com");
+        client.get(playersUrl, new AsyncHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String str = new String(responseBody);
+                parsedPlayers = returnParsedJSONObject(str, season);
+                CustomPlayerAdapter jsonPlayersCustomAdapter = new CustomPlayerAdapter(PlayersView.this, parsedPlayers);
+                players.setAdapter(jsonPlayersCustomAdapter);
+                jsonPlayersCustomAdapter.notifyDataSetChanged();
+                updatePlayerData(parsedPlayers);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                System.out.println("Error loading API: " + error);
+            }
+        });
+
+    }
+
+    private void updatePlayerData(List<PlayerObject> playerObjectList) {
+        CustomPlayerAdapter adapter = (CustomPlayerAdapter) players.getAdapter();
+        if (adapter != null) {
+            adapter.updateData(playerObjectList);
+        }
     }
 
     // override the onOptionsItemSelected()

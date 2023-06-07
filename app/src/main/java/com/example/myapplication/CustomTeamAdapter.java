@@ -80,9 +80,11 @@ public class CustomTeamAdapter extends BaseAdapter {
                 String teamId = listStorage.get(i).id;
                 String teamName = listStorage.get(i).name;
                 String teamLogo = listStorage.get(i).logo;
+                //String season = listStorage.get(i).season;
                 intent.putExtra("teamId", teamId);
                 intent.putExtra("teamName", teamName);
                 intent.putExtra("teamLogo", teamLogo);
+                //intent.putExtra("season", season);
                 context.startActivity(intent);
             }
         });
