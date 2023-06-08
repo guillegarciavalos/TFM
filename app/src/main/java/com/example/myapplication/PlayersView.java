@@ -51,6 +51,8 @@ public class PlayersView extends AppCompatActivity {
     String teamId, teamName, teamLogo, season;
     String idPName, firstname, lastname, playersUrl;
 
+    int updates = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,6 +151,8 @@ public class PlayersView extends AppCompatActivity {
     }
 
     private void getData(String season){
+        updates++;
+        System.out.println("updates: "+ updates);
         playersUrl = "https://api-nba-v1.p.rapidapi.com/players?team="+teamId+"&season="+season;
         System.out.println("url " + playersUrl);
 
@@ -160,11 +164,16 @@ public class PlayersView extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 String str = new String(responseBody);
+                if(updates > 1){
+                    parsedPlayers.clear();
+                    updatePlayerData(parsedPlayers);
+                }else{
+                   //Do nothing
+                }
                 parsedPlayers = returnParsedJSONObject(str, season);
                 CustomPlayerAdapter jsonPlayersCustomAdapter = new CustomPlayerAdapter(PlayersView.this, parsedPlayers);
                 players.setAdapter(jsonPlayersCustomAdapter);
                 jsonPlayersCustomAdapter.notifyDataSetChanged();
-                updatePlayerData(parsedPlayers);
             }
 
             @Override
