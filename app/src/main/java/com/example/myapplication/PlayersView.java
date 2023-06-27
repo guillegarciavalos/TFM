@@ -90,11 +90,15 @@ public class PlayersView extends AppCompatActivity {
         teamStatsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                String selectedSeason = spinner.getSelectedItem().toString();
+                String seasonForTeamStats = selectedSeason.replaceAll("[^0-9]", "");
+
                 Intent intent = new Intent(PlayersView.this, TeamStatsView.class);
                 intent.putExtra("teamId", teamId);
                 intent.putExtra("teamName", teamName);
                 intent.putExtra("teamLogo", teamLogo);
-                intent.putExtra("season", season);
+                intent.putExtra("season", seasonForTeamStats);
                 startActivity(intent);
             }
         });
