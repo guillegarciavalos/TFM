@@ -27,9 +27,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class TeamStatsView extends AppCompatActivity {
 
-    public DrawerLayout drawerLayout;
-    public ActionBarDrawerToggle actionBarDrawerToggle;
-
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
     String teamId, teamLogo, teamName, season;
@@ -68,7 +65,6 @@ public class TeamStatsView extends AppCompatActivity {
         teamNameTv.setText(teamName);
 
         String teamStatsUrl = "https://api-nba-v1.p.rapidapi.com/teams/statistics?id="+teamId+"&season="+season;
-        System.out.println("url " + teamStatsUrl);
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.addHeader("X-RapidAPI-Key", "4b30019b27msh7b1b5ffd53b790fp1e60bejsnb7b3a6236a8f");
@@ -101,19 +97,6 @@ public class TeamStatsView extends AppCompatActivity {
                 System.out.println("Error loading API: " + error);
             }
         });
-
-        // drawer layout instance to toggle the menu icon to open
-        // drawer and back button to close drawer
-        drawerLayout = findViewById(R.id.my_drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
-
-        // pass the Open and Close toggle for the drawer layout listener
-        // to toggle the button
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
-        // to make the Navigation drawer icon always appear on the action bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
 
@@ -154,19 +137,4 @@ public class TeamStatsView extends AppCompatActivity {
         }
         return jsonObject;
         }
-
-    // override the onOptionsItemSelected()
-    // function to implement
-    // the item click listener callback
-    // to open and close the navigation
-    // drawer when the icon is clicked
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 }

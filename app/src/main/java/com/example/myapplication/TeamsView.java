@@ -42,9 +42,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class TeamsView extends AppCompatActivity {
 
-    public DrawerLayout drawerLayout;
-    public ActionBarDrawerToggle actionBarDrawerToggle;
-
     private GridView eastTeamsGrid;
     private GridView westTeamsGrid;
     private Button logout;
