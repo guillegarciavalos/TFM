@@ -104,15 +104,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-/**
-    private void checkUser() {
-        //if user is already signed in then go to TeamsView activity
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        if(firebaseUser != null){
-            startActivity(new Intent(this, TeamsView.class));
-            finish();
-        }
-    } */
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
