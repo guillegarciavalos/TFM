@@ -2,14 +2,7 @@ package com.example.myapplication;
 
 public class TeamStatsObject {
 
-    String totalGames;
-    String totalPoints;
-    String fgm;
-    String fga;
-    String fgp;
-    String ftm;
-    String fta;
-    String ftp;
+    String totalGames, totalPoints, fgm, fga, fgp, ftm, fta, ftp;
 
     public TeamStatsObject(String totalGames, String totalPoints, String fgm,
                            String fga, String fgp, String ftm, String fta,
