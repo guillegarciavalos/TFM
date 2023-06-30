@@ -106,6 +106,7 @@ public class PlayersView extends AppCompatActivity {
         teamNameTv.setText(teamName);
         new DownloadImageFromInternet((ImageView) findViewById(R.id.teamLogo)).execute(teamLogo);
 
+        /**
         // drawer layout instance to toggle the menu icon to open
         // drawer and back button to close drawer
         drawerLayout = findViewById(R.id.my_drawer_layout);
@@ -118,6 +119,8 @@ public class PlayersView extends AppCompatActivity {
 
         // to make the Navigation drawer icon always appear on the action bar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+         */
 
     }
 
@@ -195,6 +198,7 @@ public class PlayersView extends AppCompatActivity {
         }
     }
 
+    /**
     // override the onOptionsItemSelected()
     // function to implement
     // the item click listener callback
@@ -207,5 +211,5 @@ public class PlayersView extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
+    } */
 }

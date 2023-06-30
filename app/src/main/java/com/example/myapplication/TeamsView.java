@@ -85,26 +85,6 @@ public class TeamsView extends AppCompatActivity {
 
         favTeamsBtn = findViewById(R.id.favTeamsBtn);
 
-        /** spinner = findViewById(R.id.seasonSpinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.seasons, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String itemSelected = parent.getItemAtPosition(position).toString();
-                String season = itemSelected.replaceAll("[^0-9]", "");
-                System.out.println("season: "+ season);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                season = "2021";
-            }
-        }); */
-
-
         eastTeamsBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,18 +166,6 @@ public class TeamsView extends AppCompatActivity {
             }
         });
 
-        // drawer layout instance to toggle the menu icon to open
-        // drawer and back button to close drawer
-        drawerLayout = findViewById(R.id.my_drawer_layout);
-        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.nav_open, R.string.nav_close);
-
-        // pass the Open and Close toggle for the drawer layout listener
-        // to toggle the button
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-
-        // to make the Navigation drawer icon always appear on the action bar
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private ArrayList<TeamObject> returnParsedJSONObjectEast (String result){
@@ -299,41 +267,5 @@ public class TeamsView extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.navigation_menu, menu);
-        return true;
-    }
 
-    // override the onOptionsItemSelected()
-    // function to implement
-    // the item click listener callback
-    // to open and close the navigation
-    // drawer when the icon is clicked
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        System.out.println("onOptionsItemSelected: item selected");
-
-        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        switch (item.getItemId()){
-            case R.id.nav_account:
-                System.out.println("My account selected");
-                return true;
-            case R.id.nav_logout:
-                firebaseAuth.signOut();
-                Intent intent = new Intent(TeamsView.this, MainActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.nav_teams:
-                Toast.makeText(this, "Teams selected", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 }
