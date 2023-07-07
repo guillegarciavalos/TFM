@@ -16,6 +16,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string-array name="seasons">
+        <item>Season 2022</item>
         <item>Season 2021</item>
         <item>Season 2020</item>
         <item>Season 2019</item>
